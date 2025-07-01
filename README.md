@@ -79,7 +79,7 @@ Result:
 #### 1. Which products contribute the most to carbon emissions?
 Query top 10 products contribute the most:
 ```
-SELECT product_name, ROUND(AVG(carbon_footprint_pcf),2) AS total_carbon_footprint_pcf
+SELECT product_name, ROUND(AVG(carbon_footprint_pcf),2) AS average_carbon_footprint_pcf
 FROM product_emissions
 GROUP BY product_name
 ORDER BY total_carbon_footprint_pcf DESC
@@ -101,6 +101,30 @@ Result:
 
 
 #### 2. What are the industry groups of these products?
+Query:
+```
+SELECT ind_gr.industry_group,ROUND(AVG(carbon_footprint_pcf),2) AS avg_pcf
+FROM product_emissions AS prod_em 
+JOIN industry_groups AS ind_gr ON ind_gr.id = prod_em.industry_group_id
+GROUP BY ind_gr.industry_group
+ORDER BY avg_pcf DESC
+LIMIT 10;
+```
+Result:
+| industry_group                                   | avg_pcf   | 
+| -----------------------------------------------: | --------: | 
+| Electrical Equipment and Machinery               | 891050.73 | 
+| Automobiles & Components                         | 35373.48  | 
+| "Pharmaceuticals, Biotechnology & Life Sciences" | 24162.00  | 
+| Capital Goods                                    | 7391.77   | 
+| Materials                                        | 3208.86   | 
+| "Mining - Iron, Aluminum, Other Metals"          | 2727.00   | 
+| Energy                                           | 2154.80   | 
+| Chemicals                                        | 1949.03   | 
+| Media                                            | 1534.47   | 
+| Software & Services                              | 1368.94   | 
+
+#### 3. What are the industries with the highest contribution to carbon emissions?
 Query:
 ```
 SELECT industry_group, SUM(avg_pcf) AS total_pcf
@@ -130,10 +154,74 @@ Result:
 | Software & Services                              | 23683.00   | 
 | Media                                            | 14139.33   | 
 
-#### 3. What are the industries with the highest contribution to carbon emissions?
+
+#### 4. What are the companies with the highest contribution to carbon emissions?
+Query:
+```
+SELECT co.company_name,
+	ROUND(AVG(carbon_footprint_pcf),2) AS avg_pcf
+FROM product_emissions AS prod_em
+JOIN companies AS co ON co.id = prod_em.company_id
+GROUP BY co.company_name
+ORDER BY avg_pcf DESC
+LIMIT 10;
+```
+Result:
+| company_name                           | avg_pcf    | 
+| -------------------------------------: | ---------: | 
+| "Gamesa Corporación Tecnológica, S.A." | 2444616.00 | 
+| "Hino Motors, Ltd."                    | 191687.00  | 
+| Arcelor Mittal                         | 83503.50   | 
+| Weg S/A                                | 53551.67   | 
+| Daimler AG                             | 43089.19   | 
+| General Motors Company                 | 34251.75   | 
+| Volkswagen AG                          | 26238.40   | 
+| Waters Corporation                     | 24162.00   | 
+| "Daikin Industries, Ltd."              | 17600.00   | 
+| CJ Cheiljedang                         | 15802.83   | 
 
 
+#### 5. What are the countries with the highest contribution to carbon emissions?
+Query top 10 countries by carbon emission:
+```
+SELECT countries.country_name,
+	ROUND(AVG(carbon_footprint_pcf),2) AS avg_pcf
+FROM product_emissions AS prod_em
+JOIN countries ON countries.id = prod_em.country_id
+GROUP BY countries.country_name
+ORDER BY avg_pcf DESC
+LIMIT 10;
+```
+Result:
+| country_name | avg_pcf   | 
+| -----------: | --------: | 
+| Spain        | 699009.29 | 
+| Luxembourg   | 83503.50  | 
+| Germany      | 33600.37  | 
+| Brazil       | 9407.61   | 
+| South Korea  | 5665.61   | 
+| Japan        | 4600.26   | 
+| Netherlands  | 2011.91   | 
+| India        | 1535.88   | 
+| USA          | 1332.60   | 
+| South Africa | 1119.27   | 
 
+
+#### 6. What is the trend of carbon footprints (PCFs) over the years?
+Query:
+```
+SELECT year, ROUND(AVG(carbon_footprint_pcf),2) AS avg_pcf
+FROM product_emissions AS prod_em
+GROUP BY year;
+```
+Result:
+| year | avg_pcf  | 
+| ---: | -------: | 
+| 2013 | 2399.32  | 
+| 2014 | 2457.58  | 
+| 2015 | 43188.90 | 
+| 2016 | 6891.52  | 
+| 2017 | 4050.85  | 
 
 
 
