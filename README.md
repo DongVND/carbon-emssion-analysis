@@ -103,27 +103,32 @@ Result:
 #### 2. What are the industry groups of these products?
 Query:
 ```
-SELECT ind_gr.industry_group AS 'Industry Group',
-		ROUND(AVG(carbon_footprint_pcf),2) AS 'Average PCF'
-FROM product_emissions AS prod_em 
-JOIN industry_groups AS ind_gr ON ind_gr.id = prod_em.industry_group_id
-GROUP BY ind_gr.industry_group
-ORDER BY AVG(carbon_footprint_pcf) DESC
+SELECT industry_group, SUM(avg_pcf) AS total_pcf
+FROM(
+	SELECT prod_em.product_name,
+  	ind_gr.industry_group,
+	ROUND(AVG(carbon_footprint_pcf),2) AS avg_pcf
+	FROM product_emissions AS prod_em 
+	JOIN industry_groups AS ind_gr ON ind_gr.id = prod_em.industry_group_id
+	GROUP BY prod_em.product_name, ind_gr.industry_group
+  ) AS tb
+GROUP BY industry_group
+ORDER BY total_pcf DESC
 LIMIT 10;
 ```
 Result:
-| Industry Group                                   | Average PCF | 
-| -----------------------------------------------: | ----------: | 
-| Electrical Equipment and Machinery               | 891050.73   | 
-| Automobiles & Components                         | 35373.48    | 
-| "Pharmaceuticals, Biotechnology & Life Sciences" | 24162.00    | 
-| Capital Goods                                    | 7391.77     | 
-| Materials                                        | 3208.86     | 
-| "Mining - Iron, Aluminum, Other Metals"          | 2727.00     | 
-| Energy                                           | 2154.80     | 
-| Chemicals                                        | 1949.03     | 
-| Media                                            | 1534.47     | 
-| Software & Services                              | 1368.94     | 
+| industry_group                                   | total_pcf  | 
+| -----------------------------------------------: | ---------: | 
+| Electrical Equipment and Machinery               | 9801558.00 | 
+| Automobiles & Components                         | 2318945.33 | 
+| Materials                                        | 408449.83  | 
+| Technology Hardware & Equipment                  | 252039.77  | 
+| Capital Goods                                    | 177108.75  | 
+| "Food, Beverage & Tobacco"                       | 92965.50   | 
+| "Pharmaceuticals, Biotechnology & Life Sciences" | 72486.00   | 
+| Chemicals                                        | 44939.00   | 
+| Software & Services                              | 23683.00   | 
+| Media                                            | 14139.33   | 
 
 #### 3. What are the industries with the highest contribution to carbon emissions?
 
