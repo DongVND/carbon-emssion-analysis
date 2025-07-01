@@ -1,5 +1,5 @@
 # CARBON EMISSION ANALYSIS
-![CARBON-EMISSION](https://lms.swisscoding.edu.vn/pluginfile.php/17917/mod_label/intro/cover.jpg)
+![CARBON-EMISSION](https://github.com/DongVND/carbon-emssion-analysis/blob/main/cover.jpg)
 Photo by Chris LeBoutillier (unsplash.com)
 
 
@@ -14,7 +14,7 @@ Our dataset is compiled from publicly available data from nature.com and encompa
 
 #### Data Structure
 The dataset consists of 4 tables containing information regarding carbon emissions generated during the production of goods.
-![data_structure](https://lms.swisscoding.edu.vn/pluginfile.php/17919/mod_label/intro/Database%20diagram.png)
+![data_structure](https://github.com/DongVND/carbon-emssion-analysis/blob/main/Database%20diagram.png)
 
 ##### Table 'product_emissions'
 Let's take a look at the first 3 records of the table
