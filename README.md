@@ -210,18 +210,62 @@ Result:
 #### 6. What is the trend of carbon footprints (PCFs) over the years?
 Query:
 ```
-SELECT year, ROUND(AVG(carbon_footprint_pcf),2) AS avg_pcf
+SELECT year, SUM(avg_pcf) AS sum_pcf
+FROM( 
+  SELECT year,
+  product_name,
+  ROUND(AVG(carbon_footprint_pcf),2) AS avg_pcf
 FROM product_emissions AS prod_em
+GROUP BY year, product_name
+  ) AS tb
 GROUP BY year;
 ```
 Result:
-| year | avg_pcf  | 
-| ---: | -------: | 
-| 2013 | 2399.32  | 
-| 2014 | 2457.58  | 
-| 2015 | 43188.90 | 
-| 2016 | 6891.52  | 
-| 2017 | 4050.85  | 
+| year | sum_pcf     | 
+| ---: | ----------: | 
+| 2013 | 496005.50   | 
+| 2014 | 548213.50   | 
+| 2015 | 10810407.00 | 
+| 2016 | 1608962.17  | 
+| 2017 | 224799.67   | 
+
+#### 7. Which industry groups has demonstrated the most notable decrease in carbon footprints (PCFs) over time?
+Query: 
+```
+WITH raw_data AS (
+  SELECT year,
+  		ig.industry_group,
+  		AVG(pe.carbon_footprint_pcf) AS avg_pcf
+  FROM product_emissions pe
+  JOIN industry_groups ig ON ig.id = pe.industry_group_id
+  GROUP BY year, industry_group
+  )
+ SELECT cy.industry_group,
+ 		SUM(lst_y.avg_pcf - cy.avg_pcf) AS delta_pcf
+FROM raw_data cy
+LEFT JOIN raw_data lst_y ON cy.year - 1 = lst_y.year AND cy.industry_group = lst_y.industry_group
+GROUP BY cy.industry_group
+HAVING delta_pcf IS NOT NULL
+ORDER BY delta_pcf
+;
+```
+Result:
+| industry_group                                   | delta_pcf   | 
+| -----------------------------------------------: | ----------: | 
+| "Pharmaceuticals, Biotechnology & Life Sciences" | -24079.5000 | 
+| Automobiles & Components                         | -14100.2857 | 
+| Capital Goods                                    | -13973.9667 | 
+| Materials                                        | -7152.8791  | 
+| Software & Services                              | -688.5000   | 
+| Commercial & Professional Services               | -248.7917   | 
+| "Food, Beverage & Tobacco"                       | -49.4820    | 
+| Retailing                                        | 0.8333      | 
+| Telecommunication Services                       | 6.2500      | 
+| Food & Staples Retailing                         | 76.8000     | 
+| Consumer Durables & Apparel                      | 173.5966    | 
+| Technology Hardware & Equipment                  | 265.1054    | 
+| Media                                            | 1808.5833   | 
+
 
 
 
