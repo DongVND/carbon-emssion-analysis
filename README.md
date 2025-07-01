@@ -77,18 +77,67 @@ Result:
 7. > Which industry groups has demonstrated the most notable decrease in carbon footprints (PCFs) over time?
 
 #### 1. Which products contribute the most to carbon emissions?
-Query:
+Query top 10 products contribute the most:
 ```
-SELECT product_name, SUM(carbon_footprint_pcf) AS total_carbon_footprint_pcf
+SELECT product_name, ROUND(AVG(carbon_footprint_pcf),2) AS total_carbon_footprint_pcf
 FROM product_emissions
 GROUP BY product_name
-ORDER BY total_carbon_footprint_pcf
-LIMIT 1;
+ORDER BY total_carbon_footprint_pcf DESC
+LIMIT 10;
 ```
 Result:
-| product_name                 | total_carbon_footprint_pcf | 
-| ---------------------------: | -------------------------: | 
-| Wind Turbine G128 5 Megawats | 3718044                    | 
+| product_name                                                                                                                       | total_carbon_footprint_pcf | 
+| ---------------------------------------------------------------------------------------------------------------------------------: | -------------------------: | 
+| Wind Turbine G128 5 Megawats                                                                                                       | 3718044.00                 | 
+| Wind Turbine G132 5 Megawats                                                                                                       | 3276187.00                 | 
+| Wind Turbine G114 2 Megawats                                                                                                       | 1532608.00                 | 
+| Wind Turbine G90 2 Megawats                                                                                                        | 1251625.00                 | 
+| Land Cruiser Prado. FJ Cruiser. Dyna trucks. Toyoace.IMV def unit.                                                                 | 191687.00                  | 
+| Retaining wall structure with a main wall (sheet pile): 136 tonnes of steel sheet piles and 4 tonnes of tierods per 100 meter wall | 167000.00                  | 
+| TCDE                                                                                                                               | 99075.00                   | 
+| Mercedes-Benz GLE (GLE 500 4MATIC)                                                                                                 | 91000.00                   | 
+| Mercedes-Benz S-Class (S 500)                                                                                                      | 85000.00                   | 
+| Mercedes-Benz SL (SL 350)                                                                                                          | 72000.00                   | 
+
+
+#### 2. What are the industry groups of these products?
+Query:
+```
+SELECT ind_gr.industry_group AS 'Industry Group',
+		ROUND(AVG(carbon_footprint_pcf),2) AS 'Average PCF'
+FROM product_emissions AS prod_em 
+JOIN industry_groups AS ind_gr ON ind_gr.id = prod_em.industry_group_id
+GROUP BY product_name
+ORDER BY AVG(carbon_footprint_pcf) DESC
+LIMIT 10;
+```
+Result:
+| Industry Group                     | Average PCF | 
+| ---------------------------------: | ----------: | 
+| Electrical Equipment and Machinery | 3718044.00  | 
+| Electrical Equipment and Machinery | 3276187.00  | 
+| Electrical Equipment and Machinery | 1532608.00  | 
+| Electrical Equipment and Machinery | 1251625.00  | 
+| Automobiles & Components           | 191687.00   | 
+| Materials                          | 167000.00   | 
+| Materials                          | 99075.00    | 
+| Automobiles & Components           | 91000.00    | 
+| Automobiles & Components           | 85000.00    | 
+| Automobiles & Components           | 72000.00    | 
+
+#### 3. What are the industries with the highest contribution to carbon emissions?
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
