@@ -67,4 +67,35 @@ Result:
 | 2  | "Food, Beverage & Tobacco"                                             | 
 | 3  | "Forest and Paper Products - Forestry, Timber, Pulp and Paper, Rubber" | 
 
+### ❓ Questions to research
+1. > Which products contribute the most to carbon emissions?
+2. > What are the industry groups of these products?
+3. > What are the industries with the highest contribution to carbon emissions?
+4. > What are the companies with the highest contribution to carbon emissions?
+5. > What are the countries with the highest contribution to carbon emissions?
+6. > What is the trend of carbon footprints (PCFs) over the years?
+7. > Which industry groups has demonstrated the most notable decrease in carbon footprints (PCFs) over time?
+
+#### 1. Which products contribute the most to carbon emissions?
+Query:
+```
+SELECT product_name, SUM(carbon_footprint_pcf) AS total_carbon_footprint_pcf
+FROM product_emissions
+GROUP BY product_name
+ORDER BY total_carbon_footprint_pcf
+LIMIT 1;
+```
+Result:
+| product_name                 | total_carbon_footprint_pcf | 
+| ---------------------------: | -------------------------: | 
+| Wind Turbine G128 5 Megawats | 3718044                    | 
+
+
+
+
+
+
+
+
+
 
