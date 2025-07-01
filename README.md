@@ -107,23 +107,23 @@ SELECT ind_gr.industry_group AS 'Industry Group',
 		ROUND(AVG(carbon_footprint_pcf),2) AS 'Average PCF'
 FROM product_emissions AS prod_em 
 JOIN industry_groups AS ind_gr ON ind_gr.id = prod_em.industry_group_id
-GROUP BY product_name
+GROUP BY ind_gr.industry_group
 ORDER BY AVG(carbon_footprint_pcf) DESC
 LIMIT 10;
 ```
 Result:
-| Industry Group                     | Average PCF | 
-| ---------------------------------: | ----------: | 
-| Electrical Equipment and Machinery | 3718044.00  | 
-| Electrical Equipment and Machinery | 3276187.00  | 
-| Electrical Equipment and Machinery | 1532608.00  | 
-| Electrical Equipment and Machinery | 1251625.00  | 
-| Automobiles & Components           | 191687.00   | 
-| Materials                          | 167000.00   | 
-| Materials                          | 99075.00    | 
-| Automobiles & Components           | 91000.00    | 
-| Automobiles & Components           | 85000.00    | 
-| Automobiles & Components           | 72000.00    | 
+| Industry Group                                   | Average PCF | 
+| -----------------------------------------------: | ----------: | 
+| Electrical Equipment and Machinery               | 891050.73   | 
+| Automobiles & Components                         | 35373.48    | 
+| "Pharmaceuticals, Biotechnology & Life Sciences" | 24162.00    | 
+| Capital Goods                                    | 7391.77     | 
+| Materials                                        | 3208.86     | 
+| "Mining - Iron, Aluminum, Other Metals"          | 2727.00     | 
+| Energy                                           | 2154.80     | 
+| Chemicals                                        | 1949.03     | 
+| Media                                            | 1534.47     | 
+| Software & Services                              | 1368.94     | 
 
 #### 3. What are the industries with the highest contribution to carbon emissions?
 
