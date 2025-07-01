@@ -267,8 +267,17 @@ Result:
 | Media                                            | 1808.5833   | 
 
 
-
-
+# Additional Insights:
+- The products with the highest levels of carbon emissions are typically associated with heavy industry.
+- The following car models are leading in carbon emissions during production: Land Cruiser Prado, Mercedes-Benz GLA, Mercedes-Benz S-Class, and Mercedes-Benz SL
+- One of the leading industries (7th place) is "Pharmaceuticals, Biotechnology & Life Sciences". Now we know what our health comes at.
+- The top countries contributing carbon are developed countries and most of them are in Europe.
+- There is a sudden surge in carbon footprint in 2015
+- These following industries are leading in carbon emission decrease:
+  	- Food & Staples Retailing
+  	- Consumer Durables & Apparel
+  	- Technology Hardware & Equipment
+  	- Media
 
 
 
